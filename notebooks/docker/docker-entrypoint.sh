@@ -36,8 +36,8 @@ conda install -y scikit-learn
 conda install -y openpyxl
 conda install -y xlrd xlwt   # for excel interaction
 conda install -y statsmodels
-conda install -y pystan
-conda install -c conda-forge -y fbprophet
+conda install -y pystan=2.17.1.0 convertdate holidays
+# conda install -c conda-forge -y fbprophet
 conda install -c conda-forge -y dtale
 
 
@@ -50,4 +50,7 @@ pip install tensorflow
 pip install keras
 pip install eikon    # Python wrapper for Refinitiv Eikon Data API
 pip install yahoo_fin
+pip install pmdarima
+pip install fbprophet
+
 # pip install git+git://github.com/yhilpisch/tpqoa    # Python wraper for Oanda API
