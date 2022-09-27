@@ -43,14 +43,14 @@ conda install -c conda-forge -y dtale
 
 # Install packages with pip
 pip install --upgrade pip
-pip install q    # for logging and debugging
+# pip install q    # for logging and debugging
 pip install plotly
-pip install cufflinks   # combining plotly with pandas
-pip install tensorflow
-pip install keras
-pip install eikon    # Python wrapper for Refinitiv Eikon Data API
+# pip install cufflinks   # combining plotly with pandas
+# pip install tensorflow
+# pip install keras
+# pip install eikon    # Python wrapper for Refinitiv Eikon Data API
 pip install yahoo_fin
 pip install pmdarima
-pip install fbprophet
+pip install prophet
 
 # pip install git+git://github.com/yhilpisch/tpqoa    # Python wraper for Oanda API
