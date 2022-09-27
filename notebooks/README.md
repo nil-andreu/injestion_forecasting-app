@@ -13,3 +13,10 @@ To run the Dockerfile, we should run:
 
 The 0X will be different APIs we will access to.
 The 1X will be tools to get data from multiple resources.
+
+
+## Other Resources
+- [Investors Portfolio](https://www.dataroma.com/m/managers.php)
+- [Track What Mutual Funds are doing](https://www.moneycontrol.com/mutual-funds/best-funds/equity.html)
+
+
