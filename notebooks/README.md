@@ -11,3 +11,5 @@ To run the Dockerfile, we should run:
     docker run -ti injestion_notebooks:v1
 ```
 
+The 0X will be different APIs we will access to.
+The 1X will be tools to get data from multiple resources.
