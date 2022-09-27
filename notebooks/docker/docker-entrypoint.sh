@@ -56,5 +56,6 @@ pip install neuralprophet
 pip install yahoofinancials
 pip install pandas-datareader
 pip install requests_cache
+pip install quandl
 
 # pip install git+git://github.com/yhilpisch/tpqoa    # Python wraper for Oanda API
