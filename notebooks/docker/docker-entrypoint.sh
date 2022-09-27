@@ -54,5 +54,6 @@ pip install pmdarima
 pip install prophet
 pip install neuralprophet
 pip install yahoofinancials
+pip install pandas-datareader
 
 # pip install git+git://github.com/yhilpisch/tpqoa    # Python wraper for Oanda API
