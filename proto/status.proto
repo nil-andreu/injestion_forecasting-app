@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+// message StatusRequest {
+//     string query = 1;
+//     int16 status = 2;  it is a mandatory field
+//     int16 date = 3;
+//     repeated string list_strings = 4;  repeated: the field might be repeated from 0 - infinite number of times
+//     optional int32 random = 5;   it is an optional field
+// }
+
+message StatusRequest {
+    string query = 1;
+    int32 status = 2;  
+    int32 date = 3;
+    repeated string list_strings = 4;  
+    optional int32 random = 5; 
+}
