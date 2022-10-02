@@ -8,10 +8,41 @@ syntax = "proto3";
 //     optional int32 random = 5;   it is an optional field
 // }
 
-message StatusRequest {
+// Service for obtaining list of S&P500 companies
+service UserSearchSP{
+    // Obtainig list of S&P500 companies
+    rpc ListCompaniesSP(SearchRequestSP) returns (SearchResponseSP) {}
+
+    // Streaming the information
+    rpc ListCompaniesSPStreamSingleResponse(stream SearchRequestSP) returns (SearchResponseSP) {}
+    rpc ListCompaniesSPRequestStreamResponse (SearchRequestSP) returns (stream SearchResponseSP) {}
+    rpc ListCompaniesSPStreamRequestStreamResponse (stream SearchRequestSP) returns (stream SearchResponseSP) {}
+}
+
+// We ask for the available companies that there are on S&P500
+message SearchRequestSP{
     string query = 1;
-    int32 status = 2;  
-    int32 date = 3;
-    repeated string list_strings = 4;  
-    optional int32 random = 5; 
+}
+
+message Company{
+    // Name & Ticker of the company
+    string name = 1;
+    string ticker = 2;
+
+    // Which is the sector of the company
+    message Sector{
+        string principal = 1;
+        string secondary = 2;
+    }
+
+    // The date of the first time added to the listing of S&P500
+    string first_added = 3;
+
+    // The year in which it was founded
+    int32 year_foundation = 4;
+}
+
+// Obtaining a list of all the names of the companies that are actually on the S&P500
+message SearchResponseSP{
+    repeated string Company = 1;
 }
