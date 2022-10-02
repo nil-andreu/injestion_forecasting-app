@@ -12,3 +12,4 @@ pystan==2.18.0
 fbprophet==0.7.1
 fastapi
 uvicorn
+grpcio-tools
