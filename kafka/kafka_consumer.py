@@ -14,10 +14,10 @@ consumer = Consumer({
 consumer.subscribe(['financials'])
 
 
-def run_consumer(poll_time):
+async def run_consumer(poll_time):
     while True:
         # Receive all the messages created each 500 milliseconds
-        message = consumer.poll(poll_time)
+        message = await consumer.poll(poll_time)
 
         if message is None:
             continue
@@ -30,15 +30,16 @@ def run_consumer(poll_time):
         print('Consumed: {}'.format(value))
 
 
-try:
-    run_consumer(0.5)
+async def consume():
+    try:
+        await run_consumer(0.5)
 
-except KeyboardInterrupt:
-    pass
+    except KeyboardInterrupt:
+        pass
 
-finally:
-    # When we press the KeyBoard interrupt, we close the connection of KafKa
-    consumer.close()
+    finally:
+        # When we press the KeyBoard interrupt, we close the connection of KafKa
+        consumer.close()
 
 
 
