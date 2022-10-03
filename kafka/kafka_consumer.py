@@ -1,7 +1,7 @@
 from confluent_kafka import Consumer
 
-from forecasting.kafka_forecasting.env import KAFKA_GROUP_ID
-from forecasting.kafka_forecasting.utils import error_cb, kafka_config
+from env import KAFKA_GROUP_ID
+from utils import error_cb, kafka_config
 
 
 # Check the following Documentation: https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/confluent_cloud.py
