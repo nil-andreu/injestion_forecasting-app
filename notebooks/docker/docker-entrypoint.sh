@@ -59,4 +59,8 @@ pip install requests_cache
 pip install quandl
 pip install iexfinance
 
+# And special installation for scrapping Twitter
+pip install --user --upgrade \
+    'git+https://github.com/twintproject/twint.git@origin/master#egg=twint'
+
 # pip install git+git://github.com/yhilpisch/tpqoa    # Python wraper for Oanda API
