@@ -13,3 +13,5 @@ fbprophet==0.7.1
 fastapi
 uvicorn
 grpcio-tools
+python-dotenv
+twint
