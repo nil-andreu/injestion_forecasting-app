@@ -26,7 +26,7 @@ message SearchRequestSP{
 
 message Company{
     // Name & Ticker of the company
-    string name = 1;
+    optional string name = 1;
     string ticker = 2;
 
     // Which is the sector of the company
@@ -44,5 +44,5 @@ message Company{
 
 // Obtaining a list of all the names of the companies that are actually on the S&P500
 message SearchResponseSP{
-    repeated Company = 1;
+    repeated Company company = 1;
 }
