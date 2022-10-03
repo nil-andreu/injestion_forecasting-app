@@ -9,7 +9,7 @@ syntax = "proto3";
 // }
 
 // Service for obtaining list of S&P500 companies
-service UserSearchSP{
+service ListSearchSP{
     // Obtainig list of S&P500 companies
     rpc ListCompaniesSP(SearchRequestSP) returns (SearchResponseSP) {}
 
@@ -44,5 +44,5 @@ message Company{
 
 // Obtaining a list of all the names of the companies that are actually on the S&P500
 message SearchResponseSP{
-    repeated string Company = 1;
+    repeated Company = 1;
 }
