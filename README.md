@@ -16,7 +16,7 @@ Once we have this, we will run the following compiler:
         -I ./proto \
         --python_out ./proto \
         --grpc_python_out ./proto \
-        ./proto/status.proto
+        ./proto/sp500.proto
 ```
 Where we have the following parts:
 - *-I ./proto*: where to look for the files that the proto buffer code imports
