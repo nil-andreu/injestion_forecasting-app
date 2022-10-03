@@ -5,7 +5,7 @@ import grpc
 import sp500_pb2 as sp500__pb2
 
 
-class UserSearchSPStub(object):
+class ListSearchSPStub(object):
     """message StatusRequest {
     string query = 1;
     int16 status = 2;  it is a mandatory field
@@ -24,28 +24,28 @@ class UserSearchSPStub(object):
             channel: A grpc.Channel.
         """
         self.ListCompaniesSP = channel.unary_unary(
-                '/UserSearchSP/ListCompaniesSP',
+                '/ListSearchSP/ListCompaniesSP',
                 request_serializer=sp500__pb2.SearchRequestSP.SerializeToString,
                 response_deserializer=sp500__pb2.SearchResponseSP.FromString,
                 )
         self.ListCompaniesSPStreamSingleResponse = channel.stream_unary(
-                '/UserSearchSP/ListCompaniesSPStreamSingleResponse',
+                '/ListSearchSP/ListCompaniesSPStreamSingleResponse',
                 request_serializer=sp500__pb2.SearchRequestSP.SerializeToString,
                 response_deserializer=sp500__pb2.SearchResponseSP.FromString,
                 )
         self.ListCompaniesSPRequestStreamResponse = channel.unary_stream(
-                '/UserSearchSP/ListCompaniesSPRequestStreamResponse',
+                '/ListSearchSP/ListCompaniesSPRequestStreamResponse',
                 request_serializer=sp500__pb2.SearchRequestSP.SerializeToString,
                 response_deserializer=sp500__pb2.SearchResponseSP.FromString,
                 )
         self.ListCompaniesSPStreamRequestStreamResponse = channel.stream_stream(
-                '/UserSearchSP/ListCompaniesSPStreamRequestStreamResponse',
+                '/ListSearchSP/ListCompaniesSPStreamRequestStreamResponse',
                 request_serializer=sp500__pb2.SearchRequestSP.SerializeToString,
                 response_deserializer=sp500__pb2.SearchResponseSP.FromString,
                 )
 
 
-class UserSearchSPServicer(object):
+class ListSearchSPServicer(object):
     """message StatusRequest {
     string query = 1;
     int16 status = 2;  it is a mandatory field
@@ -84,7 +84,7 @@ class UserSearchSPServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_UserSearchSPServicer_to_server(servicer, server):
+def add_ListSearchSPServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'ListCompaniesSP': grpc.unary_unary_rpc_method_handler(
                     servicer.ListCompaniesSP,
@@ -108,12 +108,12 @@ def add_UserSearchSPServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'UserSearchSP', rpc_method_handlers)
+            'ListSearchSP', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class UserSearchSP(object):
+class ListSearchSP(object):
     """message StatusRequest {
     string query = 1;
     int16 status = 2;  it is a mandatory field
@@ -136,7 +136,7 @@ class UserSearchSP(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/UserSearchSP/ListCompaniesSP',
+        return grpc.experimental.unary_unary(request, target, '/ListSearchSP/ListCompaniesSP',
             sp500__pb2.SearchRequestSP.SerializeToString,
             sp500__pb2.SearchResponseSP.FromString,
             options, channel_credentials,
@@ -153,7 +153,7 @@ class UserSearchSP(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/UserSearchSP/ListCompaniesSPStreamSingleResponse',
+        return grpc.experimental.stream_unary(request_iterator, target, '/ListSearchSP/ListCompaniesSPStreamSingleResponse',
             sp500__pb2.SearchRequestSP.SerializeToString,
             sp500__pb2.SearchResponseSP.FromString,
             options, channel_credentials,
@@ -170,7 +170,7 @@ class UserSearchSP(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/UserSearchSP/ListCompaniesSPRequestStreamResponse',
+        return grpc.experimental.unary_stream(request, target, '/ListSearchSP/ListCompaniesSPRequestStreamResponse',
             sp500__pb2.SearchRequestSP.SerializeToString,
             sp500__pb2.SearchResponseSP.FromString,
             options, channel_credentials,
@@ -187,7 +187,7 @@ class UserSearchSP(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/UserSearchSP/ListCompaniesSPStreamRequestStreamResponse',
+        return grpc.experimental.stream_stream(request_iterator, target, '/ListSearchSP/ListCompaniesSPStreamRequestStreamResponse',
             sp500__pb2.SearchRequestSP.SerializeToString,
             sp500__pb2.SearchResponseSP.FromString,
             options, channel_credentials,

@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bsp500.proto\" \n\x0fSearchRequestSP\x12\r\n\x05query\x18\x01 \x01(\t\"\x85\x01\n\x07\x43ompany\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06ticker\x18\x02 \x01(\t\x12\x13\n\x0b\x66irst_added\x18\x03 \x01(\t\x12\x17\n\x0fyear_foundation\x18\x04 \x01(\x05\x1a.\n\x06Sector\x12\x11\n\tprincipal\x18\x01 \x01(\t\x12\x11\n\tsecondary\x18\x02 \x01(\t\"#\n\x10SearchResponseSP\x12\x0f\n\x07\x43ompany\x18\x01 \x03(\t2\xc2\x02\n\x0cUserSearchSP\x12\x38\n\x0fListCompaniesSP\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00\x12N\n#ListCompaniesSPStreamSingleResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00(\x01\x12O\n$ListCompaniesSPRequestStreamResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00\x30\x01\x12W\n*ListCompaniesSPStreamRequestStreamResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00(\x01\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bsp500.proto\" \n\x0fSearchRequestSP\x12\r\n\x05query\x18\x01 \x01(\t\"\x85\x01\n\x07\x43ompany\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06ticker\x18\x02 \x01(\t\x12\x13\n\x0b\x66irst_added\x18\x03 \x01(\t\x12\x17\n\x0fyear_foundation\x18\x04 \x01(\x05\x1a.\n\x06Sector\x12\x11\n\tprincipal\x18\x01 \x01(\t\x12\x11\n\tsecondary\x18\x02 \x01(\t\"#\n\x10SearchResponseSP\x12\x0f\n\x07\x43ompany\x18\x01 \x03(\t2\xc2\x02\n\x0cListSearchSP\x12\x38\n\x0fListCompaniesSP\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00\x12N\n#ListCompaniesSPStreamSingleResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00(\x01\x12O\n$ListCompaniesSPRequestStreamResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00\x30\x01\x12W\n*ListCompaniesSPStreamRequestStreamResponse\x12\x10.SearchRequestSP\x1a\x11.SearchResponseSP\"\x00(\x01\x30\x01\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'sp500_pb2', globals())
@@ -28,6 +28,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _COMPANY_SECTOR._serialized_end=183
   _SEARCHRESPONSESP._serialized_start=185
   _SEARCHRESPONSESP._serialized_end=220
-  _USERSEARCHSP._serialized_start=223
-  _USERSEARCHSP._serialized_end=545
+  _LISTSEARCHSP._serialized_start=223
+  _LISTSEARCHSP._serialized_end=545
 # @@protoc_insertion_point(module_scope)
