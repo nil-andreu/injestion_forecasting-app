@@ -59,7 +59,7 @@ pip install requests_cache
 pip install quandl
 pip install iexfinance
 pip install openai
-pip install huggingface transformers
+pip install huggingface transformers sentencepiece
 
 # And special installation for scrapping Twitter
 pip install --user --upgrade \
