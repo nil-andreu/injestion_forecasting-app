@@ -20,3 +20,14 @@ The 1X will be tools to get data from multiple resources.
 - [Track What Mutual Funds are doing](https://www.moneycontrol.com/mutual-funds/best-funds/equity.html)
 
 
+### TODO:
+- Consume all the APIs and process the data
+- Create Rest APIs and gRPC for the injest of data, and make the statistical analysis on the other service
+- Automatize consumtion
+    - Creation of instances on AWS
+    - Based on load, creation of more instances with K8s & KEDA
+- With KafKa create async messages  --> good on performance for algorithm? If not while loop on consuming not read data with gRPC. Backend Golang can consume it this way.
+- With Celery create async tasks
+
+
+
