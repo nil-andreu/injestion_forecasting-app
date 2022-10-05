@@ -5,3 +5,4 @@ pkg
 src
 .ipynb_checkpoints
 *.sqlite
+cardiffnlp
