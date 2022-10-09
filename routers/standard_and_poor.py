@@ -74,8 +74,15 @@ async def get_sp_compny(
         comp_condition = sp_companies["Symbol"] == symbol
         record = sp_companies.loc[comp_condition]
 
-        # We return the first record, which is the one of the company
-        return record.to_dict("records")[0] if record else []
+        # If we have data and is not empty
+        if not record and not record.empty:
+            if len(record) == 1:
+                return record.to_dict("records")[0]
+            # TODO: Should have to raise an error that we have multiple companies
+        
+        else:
+            # TODO: Should have to raise an error of data not found, but with an exception customized
+            raise KeyError
     
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
