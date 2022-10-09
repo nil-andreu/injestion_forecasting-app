@@ -4,9 +4,13 @@ import requests
 import pandas as pd
 from typing import List, Union
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, \
+    Depends, Query
 
 from db_models.sp500.company import Company
+
+SP500_INFO = ['Symbol', 'Security', 'SEC filings', 'GICS Sector', 'GICS Sub-Industry',
+       'Headquarters Location', 'Date first added', 'Founded']
 
 yahoo_finance_router = APIRouter(
     prefix="/yahoo_finance",
@@ -15,9 +19,12 @@ yahoo_finance_router = APIRouter(
 )
 
 
-async def get_sp_companies():
+async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
+    """
+    Get the company information for all the 500 companies.
+    """
+
     wiki_url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-    wiki_url = "https://en.wikipedia.org/wiki/"
 
     loop = asyncio.get_event_loop()
     future = loop.run_in_executor(None, requests.get, wiki_url)
@@ -28,7 +35,7 @@ async def get_sp_companies():
         header=0, 
         )[0]
     
-    sp_companies = sp_companies.drop(["Security", "CIK"], axis=1)
+    sp_companies = sp_companies.drop(["CIK"], axis=1)
     sp_companies = sp_companies.fillna('')
 
     return sp_companies
