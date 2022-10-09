@@ -14,13 +14,10 @@ yahoo_finance_router = APIRouter(
     # TODO: dependencies for auth definition
 )
 
-    
-
-@yahoo_finance_router.get("/sp500")
-async def get_list_sp500_companies() -> List[Company]:
+async def get_sp_companies():
     wiki_url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+    wiki_url = "https://en.wikipedia.org/wiki/"
 
-    # TODO: Try-except for this request, and define fastapi error
     loop = asyncio.get_event_loop()
     future = loop.run_in_executor(None, requests.get, wiki_url)
     res = await future
@@ -32,6 +29,21 @@ async def get_list_sp500_companies() -> List[Company]:
     
     sp_companies = sp_companies.drop(["Security", "CIK"], axis=1)
     sp_companies = sp_companies.fillna('')
+
+    return sp_companies
+    
+        
+
+
+@yahoo_finance_router.get("/sp500")
+async def get_list_sp500_companies() -> List[Company]:
+    try:
+        sp_companies = await get_sp_companies()
+        return sp_companies.to_dict("record")
+    
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Data Not Found")
     
     
-    return sp_companies.to_dict("record")
+    
+    
