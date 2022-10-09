@@ -41,8 +41,8 @@ async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
     return sp_companies
     
 
-@standard_and_poor.get("/")
-async def get_list_sp500_companies() -> List[Company]:
+@standard_and_poor_router.get("/")
+async def get_list_sp_companies() -> List[Company]:
     try:
         sp_companies = await get_sp_companies()
         return sp_companies.to_dict("record")
@@ -51,8 +51,8 @@ async def get_list_sp500_companies() -> List[Company]:
         raise HTTPException(status_code=404, detail="Data Not Found")
     
 
-@standard_and_poor.get("/{symbol}")
-async def get_sp500_compny(symbol: str) -> Union[Company, None]:
+@standard_and_poor_router.get("/{symbol}")
+async def get_sp_compny(symbol: str) -> Union[Company, None]:
     """
     Based on the symbol, we get the company.
 
