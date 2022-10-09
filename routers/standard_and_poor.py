@@ -52,12 +52,14 @@ async def get_list_sp_companies() -> List[Company]:
     
 
 @standard_and_poor_router.get("/{symbol}")
-async def get_sp_compny(symbol: str) -> Union[Company, None]:
+async def get_sp_compny(
+    symbol: str = Query(default= "", max_length=4, min_length=3)
+) -> Union[Company, None]:
     """
     Based on the symbol, we get the company.
 
     Params:
-    - Symbol. This symbol is a string of length 3 identifying the company.
+    - Symbol. This symbol is a string of length 3-4 identifying the company.
 
 
     Returns:
