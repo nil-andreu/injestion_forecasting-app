@@ -12,8 +12,8 @@ from db_models.sp500.company import Company
 SP500_INFO = ['Symbol', 'Security', 'SEC filings', 'GICS Sector', 'GICS Sub-Industry',
        'Headquarters Location', 'Date first added', 'Founded']
 
-yahoo_finance_router = APIRouter(
-    prefix="/yahoo_finance",
+standard_and_poor_router = APIRouter(
+    prefix="/standard_and_poor",
     tags=["financials"]
     # TODO: dependencies for auth definition
 )
@@ -41,7 +41,7 @@ async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
     return sp_companies
     
 
-@yahoo_finance_router.get("/sp500")
+@standard_and_poor.get("/")
 async def get_list_sp500_companies() -> List[Company]:
     try:
         sp_companies = await get_sp_companies()
@@ -51,7 +51,7 @@ async def get_list_sp500_companies() -> List[Company]:
         raise HTTPException(status_code=404, detail="Data Not Found")
     
 
-@yahoo_finance_router.get("/sp500/{symbol}")
+@standard_and_poor.get("/{symbol}")
 async def get_sp500_compny(symbol: str) -> Union[Company, None]:
     """
     Based on the symbol, we get the company.
