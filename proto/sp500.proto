@@ -10,6 +10,7 @@ syntax = "proto3";
 
 // Service for obtaining list of S&P500 companies
 service ListSearchSP{
+    
     // Obtainig list of S&P500 companies
     rpc ListCompaniesSP(SearchRequestSP) returns (SearchResponseSP) {}
 

@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import sp500_pb2 as sp500__pb2
+import proto.sp500_pb2 as sp500__pb2
 
 
 class ListSearchSPStub(object):
