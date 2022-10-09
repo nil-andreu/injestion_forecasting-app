@@ -22,6 +22,7 @@ async def get_list_sp500_companies():
         )[0]
     
     sp_companies = sp_companies.drop(["Security", "CIK"], axis=1)
+    sp_companies = sp_companies.fillna('')
     
     
-    return json.dumps(sp_companies.to_dict("record"))
+    return sp_companies.to_dict("record")
