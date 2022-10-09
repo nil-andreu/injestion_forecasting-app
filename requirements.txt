@@ -14,3 +14,4 @@ fastapi
 uvicorn
 grpcio-tools
 python-dotenv
+aiohttp
