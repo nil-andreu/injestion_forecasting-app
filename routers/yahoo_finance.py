@@ -2,7 +2,7 @@ import json
 import asyncio
 import requests
 import pandas as pd
-from typing import List
+from typing import List, Union
 
 from fastapi import APIRouter, HTTPException, Depends
 
@@ -13,6 +13,7 @@ yahoo_finance_router = APIRouter(
     tags=["financials"]
     # TODO: dependencies for auth definition
 )
+
 
 async def get_sp_companies():
     wiki_url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
@@ -32,8 +33,6 @@ async def get_sp_companies():
 
     return sp_companies
     
-        
-
 
 @yahoo_finance_router.get("/sp500")
 async def get_list_sp500_companies() -> List[Company]:
@@ -44,6 +43,32 @@ async def get_list_sp500_companies() -> List[Company]:
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
     
+
+@yahoo_finance_router.get("/sp500/{symbol}")
+async def get_sp500_compny(symbol: str) -> Union[Company, None]:
+    """
+    Based on the symbol, we get the company.
+
+    Params:
+    - Symbol. This symbol is a string of length 3 identifying the company.
+
+
+    Returns:
+    - Company: The company information if it exists, else None
+
+    """
+    try:
+
+        sp_companies = await get_sp_companies()
+
+        # And now we filter by this record
+        comp_condition = sp_companies["Symbol"] == symbol
+        record = sp_companies.loc[comp_condition]
+
+        return record
+    
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Data Not Found")
     
     
     
