@@ -1,7 +1,7 @@
 from confluent_kafka import Consumer
 
-from env import KAFKA_GROUP_ID
-from utils import error_cb, kafka_config
+from kafka.env import KAFKA_GROUP_ID
+from kafka.utils import error_cb, kafka_config
 
 
 # Check the following Documentation: https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/confluent_cloud.py
@@ -13,7 +13,7 @@ consumer = Consumer({
 
 consumer.subscribe(['financials'])
 
-
+# TODO: Define correctly the consumer async
 async def run_consumer(poll_time):
     while True:
         # Receive all the messages created each 500 milliseconds

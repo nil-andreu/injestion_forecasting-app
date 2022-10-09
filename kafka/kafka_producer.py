@@ -2,7 +2,7 @@ import json
 import time
 from confluent_kafka import Producer, KafkaError, KafkaException
 
-from forecasting.kafka_forecasting.utils import kafka_config
+from kafka.utils import kafka_config
 
 
 # Check the following Documentation: https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/confluent_cloud.py
