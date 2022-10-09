@@ -72,7 +72,8 @@ async def get_sp_compny(symbol: str) -> Union[Company, None]:
         comp_condition = sp_companies["Symbol"] == symbol
         record = sp_companies.loc[comp_condition]
 
-        return record.to_dict("records")
+        # We return the first record, which is the one of the company
+        return record.to_dict("records")[0] if record else []
     
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
