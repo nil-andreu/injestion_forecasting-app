@@ -66,13 +66,13 @@ async def get_sp500_compny(symbol: str) -> Union[Company, None]:
     """
     try:
 
-        sp_companies = await get_sp_companies()
+        sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
 
         # And now we filter by this record
         comp_condition = sp_companies["Symbol"] == symbol
         record = sp_companies.loc[comp_condition]
 
-        return record
+        return record.to_dict("records")
     
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
