@@ -6,3 +6,4 @@ src
 .ipynb_checkpoints
 *.sqlite
 cardiffnlp
+/terraform/variable.tf
