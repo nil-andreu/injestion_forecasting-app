@@ -49,18 +49,35 @@ async def get_list_sp_companies() -> List[Company]:
     
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
+
+
+async def filter_sp_companies(sp_companies, ticker: str):
+    # TODO: Define the await processes
+    # And now we filter by this record
+    comp_condition = sp_companies["Symbol"] == ticker
+    record = sp_companies.loc[comp_condition]
+
+    # If we have data and is not empty
+    if not record and not record.empty:
+        if len(record) == 1:
+            return record.to_dict("records")[0]
+        # TODO: Should have to raise an error that we have multiple companies
     
+    else:
+        # TODO: Should have to raise an error of data not found, but with an exception customized
+        raise KeyError
+
+
 
 @standard_and_poor_router.get("/{symbol}")
 async def get_sp_compny(
-    symbol: str = Query(default= "", max_length=4, min_length=3)
+    ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[Company, None]:
     """
     Based on the symbol, we get the company.
 
     Params:
-    - Symbol. This symbol is a string of length 3-4 identifying the company.
-
+    - ticker: this ticker is a string of length 3-4 identifying the company.
 
     Returns:
     - Company: The company information if it exists, else None
@@ -69,20 +86,8 @@ async def get_sp_compny(
     try:
 
         sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
-
-        # And now we filter by this record
-        comp_condition = sp_companies["Symbol"] == symbol
-        record = sp_companies.loc[comp_condition]
-
-        # If we have data and is not empty
-        if not record and not record.empty:
-            if len(record) == 1:
-                return record.to_dict("records")[0]
-            # TODO: Should have to raise an error that we have multiple companies
-        
-        else:
-            # TODO: Should have to raise an error of data not found, but with an exception customized
-            raise KeyError
+        record: Company = await filter_sp_companies(sp_companies, ticker)
+        return record
     
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
