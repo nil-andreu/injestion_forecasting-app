@@ -78,8 +78,8 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
     comp_condition = sp_companies["Symbol"] == ticker
     record = sp_companies.loc[comp_condition]
 
-    # If we have data and is not empty
-    if not record.empty:
+    # If we have dataframe and is not empty
+    if isinstance(record, pd.DataFrame) and not record.empty:
         if len(record) == 1:
             return record.to_dict("records")[0]
         # TODO: Should have to raise an error that we have multiple companies
