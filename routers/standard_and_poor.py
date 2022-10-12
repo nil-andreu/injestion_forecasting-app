@@ -9,7 +9,7 @@ from fastapi import APIRouter, HTTPException, \
 
 from constants import SP500_INFO
 from db_models.sp500.company import Company
-from services.standard_and_poor import get_sp_companies
+from services.standard_and_poor import get_sp_companies, filter_sp_companies
 
 standard_and_poor_router = APIRouter(
     prefix="/standard_and_poor",
@@ -37,36 +37,6 @@ async def get_list_sp_companies() -> List[Company]:
     # If we have a value error, means we were not able to get the information from the table
     except ValueError:
         raise HTTPException(status_code=404, detail="Data of S&P500 Companies Not Found")
-
-
-async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Company:
-    """
-    Filter the dataframe of the standard & poor companies by the ticker of one company.
-
-    Params:
-    - sp_companies: the dataframe with the information of all the S&P Companies
-    - ticker: the ticker identifier of the company
-
-    Returns:
-    - Company: the company information assigned of that ticker
-    """
-
-    # And now we filter by this record
-    comp_condition = sp_companies["Symbol"] == ticker
-    record = sp_companies.loc[comp_condition]
-
-    # If we have dataframe and is not empty
-    if isinstance(record, pd.DataFrame) and not record.empty:
-        if len(record) == 1:
-            return record.to_dict("records")[0]
-        
-        # Should have to raise an error that we have multiple companies
-        raise ValueError("Multiple Company Information Found")
-    
-    else:
-        # TODO: Should have to raise an error of data not found, but with an exception customized
-        raise ValueError("Company Ticker not Found")
-
 
 
 @standard_and_poor_router.get("/{ticker}")
