@@ -11,7 +11,7 @@ class Company(BaseModel):
     date_first_added: date
     founded: int
 
-class Data(BaseModel):
+class DataPrice(BaseModel):
     date: date
     open: float
     high: float
