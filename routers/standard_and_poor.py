@@ -52,7 +52,7 @@ async def get_list_sp_companies() -> List[Company]:
     - sp_companies: a list of the company informations
 
     """
-    
+
     try:
         sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
         return sp_companies.to_dict("record")
@@ -79,7 +79,7 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
     record = sp_companies.loc[comp_condition]
 
     # If we have data and is not empty
-    if not record and not record.empty:
+    if not record.empty:
         if len(record) == 1:
             return record.to_dict("records")[0]
         # TODO: Should have to raise an error that we have multiple companies
@@ -90,7 +90,7 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
 
 
 
-@standard_and_poor_router.get("/{symbol}")
+@standard_and_poor_router.get("/{ticker}")
 async def get_sp_compny(
     ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[Company, None]:
@@ -105,7 +105,6 @@ async def get_sp_compny(
 
     """
     try:
-
         sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
         record: Company = await filter_sp_companies(sp_companies, ticker)
         return record
