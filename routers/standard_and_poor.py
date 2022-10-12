@@ -7,41 +7,16 @@ from typing import List, Union
 from fastapi import APIRouter, HTTPException, \
     Depends, Query
 
+from constants import SP500_INFO
 from db_models.sp500.company import Company
-
-SP500_INFO = ['Symbol', 'Security', 'SEC filings', 'GICS Sector', 'GICS Sub-Industry',
-       'Headquarters Location', 'Date first added', 'Founded']
+from services.standard_and_poor import get_sp_companies
 
 standard_and_poor_router = APIRouter(
     prefix="/standard_and_poor",
     tags=["financials"]
     # TODO: dependencies for auth definition
 )
-
-
-async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
-    """
-    Get the company information for all the 500 companies.
-    """
-
-    wiki_url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-
-    loop = asyncio.get_event_loop()
-    future = loop.run_in_executor(None, requests.get, wiki_url)
-    res = await future
-
-    sp_companies = pd.read_html(
-        res.text, 
-        header=0, 
-        )[0]
-    
-    sp_companies = sp_companies.drop(["CIK"], axis=1)
-    sp_companies = sp_companies.fillna('')
-
-    return sp_companies
-    
-    # When we try to import for a table that does not exists, we have an import error
-    
+        
 
 @standard_and_poor_router.get("/")
 async def get_list_sp_companies() -> List[Company]:
