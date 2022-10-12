@@ -40,6 +40,8 @@ async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
 
     return sp_companies
     
+    # When we try to import for a table that does not exists, we have an import error
+    
 
 @standard_and_poor_router.get("/")
 async def get_list_sp_companies() -> List[Company]:
@@ -57,8 +59,9 @@ async def get_list_sp_companies() -> List[Company]:
         sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
         return sp_companies.to_dict("record")
     
-    except KeyError:
-        raise HTTPException(status_code=404, detail="Data Not Found")
+    # If we have a value error, means we were not able to get the information from the table
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Data of S&P500 Companies Not Found")
 
 
 async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Company:
@@ -73,7 +76,6 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
     - Company: the company information assigned of that ticker
     """
 
-    # TODO: Define the await processes
     # And now we filter by this record
     comp_condition = sp_companies["Symbol"] == ticker
     record = sp_companies.loc[comp_condition]
@@ -82,11 +84,14 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
     if isinstance(record, pd.DataFrame) and not record.empty:
         if len(record) == 1:
             return record.to_dict("records")[0]
-        # TODO: Should have to raise an error that we have multiple companies
+        
+        # Should have to raise an error that we have multiple companies
+        if len(record) > 1:
+            raise ValueError("Multiple Company Information Found")
     
     else:
         # TODO: Should have to raise an error of data not found, but with an exception customized
-        raise KeyError
+        raise ValueError("Company Ticker not Found")
 
 
 
@@ -109,7 +114,7 @@ async def get_sp_compny(
         record: Company = await filter_sp_companies(sp_companies, ticker)
         return record
     
-    except KeyError:
+    except ValueError:
         raise HTTPException(status_code=404, detail="Data Not Found")
     
     
