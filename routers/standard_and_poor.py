@@ -86,8 +86,7 @@ async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Compan
             return record.to_dict("records")[0]
         
         # Should have to raise an error that we have multiple companies
-        if len(record) > 1:
-            raise ValueError("Multiple Company Information Found")
+        raise ValueError("Multiple Company Information Found")
     
     else:
         # TODO: Should have to raise an error of data not found, but with an exception customized
