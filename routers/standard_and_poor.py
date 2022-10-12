@@ -51,7 +51,18 @@ async def get_list_sp_companies() -> List[Company]:
         raise HTTPException(status_code=404, detail="Data Not Found")
 
 
-async def filter_sp_companies(sp_companies, ticker: str):
+async def filter_sp_companies(sp_companies: pd.DataFrame, ticker: str) -> Company:
+    """
+    Filter the dataframe of the standard & poor companies by the ticker of one company.
+
+    Params:
+    - sp_companies: the dataframe with the information of all the S&P Companies
+    - ticker: the ticker identifier of the company
+
+    Returns:
+    - Company: the company information assigned of that ticker
+    """
+
     # TODO: Define the await processes
     # And now we filter by this record
     comp_condition = sp_companies["Symbol"] == ticker
