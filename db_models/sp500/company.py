@@ -10,3 +10,12 @@ class Company(BaseModel):
     headquarters_location: str
     date_first_added: date
     founded: int
+
+class Data(BaseModel):
+    date: date
+    open: float
+    high: float
+    low: float
+    close: float
+    adjclose: float
+    volume: int
