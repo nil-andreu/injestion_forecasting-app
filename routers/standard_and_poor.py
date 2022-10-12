@@ -43,8 +43,18 @@ async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
 
 @standard_and_poor_router.get("/")
 async def get_list_sp_companies() -> List[Company]:
+    """
+    Get the list of all the Standard & Poors 500 companies.
+
+    Params:
+
+    Returns:
+    - sp_companies: a list of the company informations
+
+    """
+    
     try:
-        sp_companies = await get_sp_companies()
+        sp_companies: pd.DataFrame(columns=SP500_INFO) = await get_sp_companies()
         return sp_companies.to_dict("record")
     
     except KeyError:
