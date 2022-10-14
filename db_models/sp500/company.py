@@ -11,11 +11,3 @@ class Company(BaseModel):
     date_first_added: date
     founded: int
 
-class DataPrice(BaseModel):
-    date: date
-    open: float
-    high: float
-    low: float
-    close: float
-    adjclose: float
-    volume: int
