@@ -2,6 +2,7 @@ yahoo_fin
 requests_html
 jupyter
 confluent_kafka==1.9.2
+yahoofinancials
 matplotlib==3.6.0
 seaborn==0.12
 dtale==2.3.1
