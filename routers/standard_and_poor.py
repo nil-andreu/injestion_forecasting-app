@@ -22,7 +22,7 @@ standard_and_poor_router = APIRouter(
 )
         
 
-@standard_and_poor_router.get("/")
+@standard_and_poor_router.get("/yahoo_fin/")
 async def get_list_sp_companies() -> Union[List[Company], None]:
     """
     Get the list of all the Standard & Poors 500 companies.
@@ -43,7 +43,7 @@ async def get_list_sp_companies() -> Union[List[Company], None]:
         raise HTTPException(status_code=404, detail="Data of S&P500 Companies Not Found")
 
 
-@standard_and_poor_router.get("/{ticker}")
+@standard_and_poor_router.get("/yahoo_fin/{ticker}")
 async def get_sp_compny(
     ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[Company, None]:
@@ -66,7 +66,7 @@ async def get_sp_compny(
         raise HTTPException(status_code=404, detail="Data Not Found")
 
 
-@standard_and_poor_router.post("/data_price/")
+@standard_and_poor_router.post("/data_price/yahoo_fin/")
 async def get_data_price_sp_compny(
     body_data_price: BodyDataPrice
 ) -> Union[List[DataPrice], None]:
