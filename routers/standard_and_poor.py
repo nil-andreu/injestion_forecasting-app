@@ -15,6 +15,9 @@ from db_models.sp500.data_price import DataPrice, BodyDataPrice
 from db_models.sp500.company import Company
 from services.standard_and_poor import get_sp_companies, filter_sp_companies, get_public_price
 
+# Interesting we can request multiple financial statements
+from yahoofinancials import YahooFinancials as yf
+
 standard_and_poor_router = APIRouter(
     prefix="/standard_and_poor",
     tags=["financials"]
@@ -22,7 +25,7 @@ standard_and_poor_router = APIRouter(
 )
         
 
-@standard_and_poor_router.get("/yahoo_fin/")
+@standard_and_poor_router.get("/yahoo_fin/", tags=["Yahoo Fin"])
 async def get_list_sp_companies() -> Union[List[Company], None]:
     """
     Get the list of all the Standard & Poors 500 companies.
@@ -43,7 +46,7 @@ async def get_list_sp_companies() -> Union[List[Company], None]:
         raise HTTPException(status_code=404, detail="Data of S&P500 Companies Not Found")
 
 
-@standard_and_poor_router.get("/yahoo_fin/{ticker}")
+@standard_and_poor_router.get("/yahoo_fin/{ticker}", tags=["Yahoo Fin"])
 async def get_sp_compny(
     ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[Company, None]:
@@ -66,7 +69,7 @@ async def get_sp_compny(
         raise HTTPException(status_code=404, detail="Data Not Found")
 
 
-@standard_and_poor_router.post("/data_price/yahoo_fin/")
+@standard_and_poor_router.post("/yahoo_fin/data_price/", tags=["Yahoo Fin"])
 async def get_data_price_sp_compny(
     body_data_price: BodyDataPrice
 ) -> Union[List[DataPrice], None]:
@@ -96,3 +99,17 @@ async def get_data_price_sp_compny(
     # If the data does not exists for a certain ticker, the function raises a KeyError
     except KeyError:
         raise HTTPException(status_code=404, detail="Data Not Found")
+
+
+@standard_and_poor_router.post("/yahoo_financials/beta/{ticker}", tags=["Yahoo Financials"])
+async def get_beta_sp_compny(
+    ticker: str = Query(default= "", max_length=4, min_length=3)
+) -> Union[str, None]:
+    company = yf(ticker)
+    beta = company.get_beta()
+
+    # In the case there is a beta
+    if beta:
+        return beta
+
+    raise HTTPException(status_code=404, detail="Data Beta Found For this Ticker")
