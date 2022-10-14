@@ -5,7 +5,7 @@ import pandas as pd
 import uvicorn as uvicorn
 from fastapi import FastAPI
 
-from injestion.routers.standard_and_poor import standard_and_poor
+from routers.standard_and_poor import standard_and_poor_router
 from proto import sp500_pb2_grpc, sp500_pb2
 # TODO: Async routers
 # from kafka.kafka_consumer import consume 
@@ -24,7 +24,7 @@ def create_app() -> FastAPI:
     return current_app
 
 app = create_app()
-app.include_router(standard_and_poor)
+app.include_router(standard_and_poor_router)
 
 # And now we start the consumer on the event of the application
 # @app.on_event("startup")
