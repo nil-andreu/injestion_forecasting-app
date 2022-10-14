@@ -15,8 +15,15 @@ class DataPrice(BaseModel):
     volume: int
 
 
-class BodyDataPrice(BaseModel):
+class BodyDataPriceYahooFin(BaseModel):
     ticker: str
     interval: str 
     start_date: dt.date = dt.date.today() - relativedelta(years=3)
     index_as_date: bool = True
+
+
+class BodyDataPriceYahooFinancials(BaseModel):
+    ticker: str
+    interval: str
+    start_date: dt.date = dt.date.today() - relativedelta(years=3)
+    end_date: dt.date = dt.date.today() - relativedelta(years=3)
