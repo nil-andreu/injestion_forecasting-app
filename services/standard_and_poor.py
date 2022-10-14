@@ -9,6 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 from constants import SP500_INFO
 from db_models.sp500.company import Company
+from db_models.sp500.data_price import DataPrice
 from yahoo_fin.stock_info import get_data
 
 async def get_sp_companies() -> pd.DataFrame(columns = SP500_INFO):
@@ -67,7 +68,7 @@ async def get_public_price(
     interval: str, 
     start_date: dt.date = dt.date.today() - relativedelta(years=3),
     index_as_date: bool = True,
-    ):
+) -> DataPrice:
 
     public_price = get_data(
         ticker=ticker,
@@ -76,4 +77,6 @@ async def get_public_price(
         index_as_date=index_as_date,
     )
 
-    return public_price.to_dict("records")
+    # Return those values as the index
+    return public_price.to_dict("index")
+    
