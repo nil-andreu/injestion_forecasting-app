@@ -2,14 +2,18 @@ import json
 import asyncio
 import requests
 import pandas as pd
+
+from pydantic import BaseModel
 from typing import List, Union
+
 
 from fastapi import APIRouter, HTTPException, \
     Depends, Query
 
 from constants import SP500_INFO
+from db_models.sp500.data_price import DataPrice, BodyDataPrice
 from db_models.sp500.company import Company
-from services.standard_and_poor import get_sp_companies, filter_sp_companies
+from services.standard_and_poor import get_sp_companies, filter_sp_companies, get_public_price
 
 standard_and_poor_router = APIRouter(
     prefix="/standard_and_poor",
@@ -19,7 +23,7 @@ standard_and_poor_router = APIRouter(
         
 
 @standard_and_poor_router.get("/")
-async def get_list_sp_companies() -> List[Company]:
+async def get_list_sp_companies() -> Union[List[Company], None]:
     """
     Get the list of all the Standard & Poors 500 companies.
 
@@ -60,6 +64,35 @@ async def get_sp_compny(
     
     except ValueError:
         raise HTTPException(status_code=404, detail="Data Not Found")
+
+
+@standard_and_poor_router.post("/data_price/")
+async def get_data_price_sp_compny(
+    body_data_price: BodyDataPrice
+) -> Union[List[DataPrice], None]:
+    """
+    Based on the symbol, we get the company.
+
+    Params:
+    - ticker: this ticker is a string of length 3-4 identifying the company.
+    - interval: the interval of the records of the prices: ("1d", "1wk", "1mo", "1m")
+    - start_date: how much time to look to the past prices
+    - index_as_date: the returned dataframe has the date as the index
+
+    Returns:
+    - DataPrice: The data of the prices of the company for the given period.
+
+    """
+    try:
+        data_prices: List[DataPrice] = await get_public_price(
+            ticker=body_data_price.ticker, 
+            interval=body_data_price.interval,
+            start_date=body_data_price.start_date,
+            index_as_date=body_data_price.index_as_date
+        )
+
+        return data_prices
     
-    
-    
+    # If the data does not exists for a certain ticker, the function raises a KeyError
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Data Not Found")
