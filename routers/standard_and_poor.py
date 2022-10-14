@@ -18,14 +18,20 @@ from services.standard_and_poor import get_sp_companies, filter_sp_companies, ge
 # Interesting we can request multiple financial statements
 from yahoofinancials import YahooFinancials as yf
 
+
+# tags_metadata = [
+#     {"name": "Yahoo Fin", "description": "Accessing Yahoo Finance with Yahoo Fin library"},
+#     {"name": "Yahoo Financials", "description": "Accessing Yahoo Finance with Yahoo Financials library"}
+# ]
+
+
 standard_and_poor_router = APIRouter(
     prefix="/standard_and_poor",
-    tags=["financials"]
     # TODO: dependencies for auth definition
 )
         
 
-@standard_and_poor_router.get("/yahoo_fin/", tags=["Yahoo Fin"])
+@standard_and_poor_router.get("/yahoo_fin/", tags=["S&P500 / Yahoo Fin"])
 async def get_list_sp_companies() -> Union[List[Company], None]:
     """
     Get the list of all the Standard & Poors 500 companies.
@@ -46,7 +52,7 @@ async def get_list_sp_companies() -> Union[List[Company], None]:
         raise HTTPException(status_code=404, detail="Data of S&P500 Companies Not Found")
 
 
-@standard_and_poor_router.get("/yahoo_fin/{ticker}", tags=["Yahoo Fin"])
+@standard_and_poor_router.get("/yahoo_fin/{ticker}", tags=["S&P500 / Yahoo Fin"])
 async def get_sp_compny(
     ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[Company, None]:
@@ -69,7 +75,7 @@ async def get_sp_compny(
         raise HTTPException(status_code=404, detail="Data Not Found")
 
 
-@standard_and_poor_router.post("/yahoo_fin/data_price/", tags=["Yahoo Fin"])
+@standard_and_poor_router.post("/yahoo_fin/data_price/", tags=["S&P500 / Yahoo Fin"])
 async def get_data_price_sp_compny(
     body_data_price: BodyDataPrice
 ) -> Union[List[DataPrice], None]:
@@ -101,7 +107,7 @@ async def get_data_price_sp_compny(
         raise HTTPException(status_code=404, detail="Data Not Found")
 
 
-@standard_and_poor_router.post("/yahoo_financials/beta/{ticker}", tags=["Yahoo Financials"])
+@standard_and_poor_router.post("/yahoo_financials/beta/{ticker}", tags=["S&P500 / Yahoo Financials"])
 async def get_beta_sp_compny(
     ticker: str = Query(default= "", max_length=4, min_length=3)
 ) -> Union[str, None]:
@@ -111,5 +117,19 @@ async def get_beta_sp_compny(
     # In the case there is a beta
     if beta:
         return beta
+
+    raise HTTPException(status_code=404, detail="Data Beta Found For this Ticker")
+
+
+@standard_and_poor_router.post("/yahoo_financials/capitalization/{ticker}", tags=["S&P500 / Yahoo Financials"])
+async def get_beta_sp_compny(
+    ticker: str = Query(default= "", max_length=4, min_length=3)
+) -> Union[str, None]:
+    company = yf(ticker)
+    market_capitalization = company.get_market_cap()
+
+    # In the case there is a beta
+    if market_capitalization:
+        return market_capitalization
 
     raise HTTPException(status_code=404, detail="Data Beta Found For this Ticker")
